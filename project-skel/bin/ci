@@ -14,4 +14,4 @@ ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/briceburg/anyci-b
 }
 
 export PROJECT_ROOT
-exec "$ANYCI_HOME/anyci-bootstrap/bin/bootstrap" "$@"
+exec "$ANYCI_HOME/anyci-bootstrap/bin/anyci-bootstrap" "$@"
