@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -eo pipefail
+readonly PROJECT_ROOT="$( cd "$(dirname "$0")/.." ; pwd -P)"
+readonly __entry=$(basename "$0")
+log(){ echo -e "$__entry: $*" >&2; }
+die(){ log "[ERR] $*"; exit 1; }
+
+ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
+ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/briceburg/anyci-bootstrap.git}"
+
+[ -d "$ANYCI_HOME/anyci-bootstrap" ] || {
+  log "missing anyci-bootstrap. intalling now..."
+  git clone "$ANYCI_BOOTSTRAP_URL" "$ANYCI_HOME/anyci-bootstrap"
+}
+
+export PROJECT_ROOT
+exec "$ANYCI_HOME/anyci-bootstrap/bin/bootstrap" "$@"

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -eo pipefail
+readonly ANYCI_HOME="$( cd "$(dirname "$0")/.." ; pwd -P)"
+readonly __entry=$(basename "$0")
+log(){ echo -e "$__entry: $*" >&2; }
+die(){ log "[ERR] $*"; exit 1; }
+
+ANYCI_URL="${ANYCI_URL:-https://github.com/briceburg/anyci.git}"
+
+[ -d "$ANYCI_HOME/anyci-mirror" ] || {
+  log "missing anyci-mirror repository. intalling now..."
+  git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror"
+}
+
+log "foo"
