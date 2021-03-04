@@ -9,7 +9,7 @@ ANYCI_URL="${ANYCI_URL:-https://github.com/briceburg/anyci.git}"
 
 [ -d "$ANYCI_HOME/anyci-mirror" ] || {
   log "missing anyci-mirror repository. intalling now..."
-  git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror"
+  git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror" 2>&1 | sed "s/^/    /g"
 }
 
 log "foo"

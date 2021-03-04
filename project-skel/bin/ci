@@ -10,7 +10,7 @@ ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/briceburg/anyci-b
 
 [ -d "$ANYCI_HOME/anyci-bootstrap" ] || {
   log "missing anyci-bootstrap. intalling now..."
-  git clone "$ANYCI_BOOTSTRAP_URL" "$ANYCI_HOME/anyci-bootstrap"
+  git clone "$ANYCI_BOOTSTRAP_URL" "$ANYCI_HOME/anyci-bootstrap" 2>&1 | sed "s/^/    /g"
 }
 
 export PROJECT_ROOT
