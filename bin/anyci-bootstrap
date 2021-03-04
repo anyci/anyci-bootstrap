@@ -24,4 +24,12 @@ log "age of last update: ${last_update}s"
   git remote update 2>&1 | sed "s/^/    /g"
 )
 
-log "foo"
+ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
+trap 'rm -rf $ANYCI_ROOT' EXIT
+
+log "creating anyci workspace..."
+git clone "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/    /g"
+
+# ci handoff...
+export ANYCI_ROOT
+"$ANYCI_ROOT/bin/anyci-ci" "$@"
