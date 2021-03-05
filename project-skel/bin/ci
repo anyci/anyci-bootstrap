@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
 readonly PROJECT_ROOT="$( cd "$(dirname "$0")/.." ; pwd -P)"
-readonly __entry=$(basename "$0")
-log(){ echo -e "$__entry: $*" >&2; }
+log(){ echo -e "bin/ci: $*" >&2; }
 die(){ log "[ERR] $*"; exit 1; }
 
 ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"

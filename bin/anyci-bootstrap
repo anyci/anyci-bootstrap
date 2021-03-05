@@ -29,9 +29,9 @@ ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
 $ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf $ANYCI_ROOT' EXIT
 
 log "creating anyci workspace..."
-git clone "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/    /g"
+git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/    /g"
 
 # ci handoff...
-log "anyci workspace: $ANYCI_ROOT"
+log "workspace: $ANYCI_ROOT"
 cd "$ANYCI_ROOT"
 bin/anyci-ci "$@"
