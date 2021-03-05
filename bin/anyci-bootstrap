@@ -10,6 +10,7 @@ age() { echo $(( $(date +%s) - $(date -r "$1" +%s) )); }
 ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
 ANYCI_URL="${ANYCI_URL:-https://github.com/briceburg/anyci.git}"
 ANYCI_MAX_AGE="${ANYCI_MAX_AGE:-60}"
+ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
 
 [ -d "$ANYCI_HOME/anyci-mirror" ] || {
   log "missing anyci-mirror repository. intalling now..."
@@ -25,11 +26,12 @@ log "age of last update: ${last_update}s"
 )
 
 ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
-trap 'rm -rf $ANYCI_ROOT' EXIT
+$ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf $ANYCI_ROOT' EXIT
 
 log "creating anyci workspace..."
 git clone "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/    /g"
 
 # ci handoff...
-export ANYCI_ROOT
-"$ANYCI_ROOT/bin/anyci-ci" "$@"
+log "anyci workspace: $ANYCI_ROOT"
+cd "$ANYCI_ROOT"
+bin/anyci-ci "$@"
