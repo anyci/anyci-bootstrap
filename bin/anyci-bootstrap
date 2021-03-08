@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -eo pipefail
 readonly __entry=$(basename "$0")
-log(){ echo -e "$__entry: $*" >&2; }
-die(){ log "[ERR] $*"; exit 1; }
+log(){ printf "# %-${__lpad:-17}s [${__ll:-INFO}] $*\n" "($__entry)" >&2; }
+die(){ __ll=ERR log "$*"; exit 1; }
 
 # prints age of a path in seconds
 age() { echo $(( $(date +%s) - $(date -r "$1" +%s) )); }
@@ -14,7 +14,7 @@ ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
 
 [ -d "$ANYCI_HOME/anyci-mirror" ] || {
   log "missing anyci-mirror repository. intalling now..."
-  git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror" 2>&1 | sed "s/^/    /g"
+  git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror" 2>&1 | sed "s/^/#    /g"
 }
 
 last_update="$(age "$ANYCI_HOME/anyci-mirror/objects")"
@@ -22,16 +22,16 @@ log "age of last update: ${last_update}s"
 [ "$last_update" -lt "$ANYCI_MAX_AGE" ] || (
   log "updating anyci-mirror reposirory..."
   cd "$ANYCI_HOME/anyci-mirror"
-  git remote update 2>&1 | sed "s/^/    /g"
+  git remote update 2>&1 | sed "s/^/#    /g"
 )
 
 ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
 $ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf $ANYCI_ROOT' EXIT
 
 log "creating anyci workspace..."
-git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/    /g"
+git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
 
 # ci handoff...
-log "workspace: $ANYCI_ROOT"
+log "WORKSPACE: $ANYCI_ROOT"
 cd "$ANYCI_ROOT"
 bin/anyci-ci "$@"
