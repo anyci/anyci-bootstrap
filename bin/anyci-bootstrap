@@ -26,7 +26,7 @@ log "age of last update: ${last_update}s"
 )
 
 ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
-$ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf $ANYCI_ROOT' EXIT
+$ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf "$ANYCI_ROOT"' EXIT
 
 log "creating anyci workspace..."
 git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
