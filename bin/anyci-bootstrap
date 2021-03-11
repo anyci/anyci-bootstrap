@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -eo pipefail
-readonly __entry=$(basename "$0")
-log(){ printf "# %-${__lpad:-17}s [${__ll:-INFO}] $*\n" "($__entry)" >&2; }
+readonly __ENTRY=$(basename "$0")
+log(){ printf "# %-${__lpad:-17}s [${__ll:-INFO}] $*\n" "($__ENTRY)" >&2; }
 die(){ __ll=ERR log "$*"; exit 1; }
 
 # prints age of a path in seconds
@@ -34,4 +34,4 @@ git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
 # ci handoff...
 log "WORKSPACE: $ANYCI_ROOT"
 cd "$ANYCI_ROOT"
-bin/anyci-ci "$@"
+bin/anyci "$@"
