@@ -7,18 +7,18 @@ Add `bin/ci` to your project repositories using [project-skel/bin/ci](project-sk
 
 :construction: TBD instruction / convenience tool utilizing `git subtree`
 
-Once added, simply run `bin/ci` from your project. See [anyci](https://github.com/briceburg/anyci.git) for documentation.
+Once added, simply run `bin/ci` from your project. See [anyci](https://github.com/anyci/anyci.git) for documentation.
 
 ## environment variables
 
 name | default | description
 --- | --- | ---
-ANYCI_BOOTSTRAP_URL | https://github.com/briceburg/anyci-bootstrap.git | URL used by `bin/ci` in project repositories to bootstrap anyci. Can be a path.
+ANYCI_BOOTSTRAP_URL | https://github.com/anyci/anyci-bootstrap.git | URL used by `bin/ci` in project repositories to bootstrap anyci. Can be a path.
 ANYCI_BRANCH | ~empty | Optional. If provided, the branch of the shared anyci repository to checkout when creating the workspace.
 ANYCI_HOME | ~/.anyci | Workspaces and Checkouts directory.
 ANYCI_MAX_AGE | 60 | Number of seconds allowed before checking for  updates.
 ANYCI_SKIP_CLEANUP | false | True to skip cleaning up workspaces and tmp files.
-ANYCI_URL | https://github.com/briceburg/anyci.git | URL of shared anyci repository. Can be a path.
+ANYCI_URL | https://github.com/anyci/anyci.git | URL of shared anyci repository. Can be a path.
 
 
 

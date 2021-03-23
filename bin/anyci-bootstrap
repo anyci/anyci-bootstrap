@@ -8,7 +8,7 @@ die(){ __ll=ERR log "$*"; exit 1; }
 age() { echo $(( $(date +%s) - $(date -r "$1" +%s) )); }
 
 ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
-ANYCI_URL="${ANYCI_URL:-https://github.com/briceburg/anyci.git}"
+ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
 ANYCI_MAX_AGE="${ANYCI_MAX_AGE:-60}"
 ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
 
