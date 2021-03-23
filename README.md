@@ -3,7 +3,11 @@ anyci-bootstrap ensures you have an always-updated shared anyci repository avail
 
 ## quickstart
 
-Add `bin/ci` to project repositories using [project-skel/bin/ci](project-skel/bin/ci) as source. You can change the path, just be sure PROJECT_ROOT is detected properly.
+Add `bin/ci` to your project repositories using [project-skel/bin/ci](project-skel/bin/ci) as source, making sure it is **executable**. You can change the path, just be sure PROJECT_ROOT is detected properly.
+
+:construction: TBD instruction / convenience tool utilizing `git subtree`
+
+Once added, simply run `bin/ci` from your project. See [anyci](https://github.com/briceburg/anyci.git) for documentation.
 
 ## environment variables
 
@@ -19,8 +23,6 @@ ANYCI_URL | https://github.com/briceburg/anyci.git | URL of shared anyci reposit
 
 
 ## development
-
-:construction:
 
 ```
 # cd /path/to/anyci-bootstap. assumes anyci is checked out alongside anyci-bootstap
