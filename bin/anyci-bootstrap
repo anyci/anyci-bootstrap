@@ -34,4 +34,5 @@ git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
 # ci handoff...
 log "WORKSPACE: $ANYCI_ROOT"
 cd "$ANYCI_ROOT"
+[ -z "$ANYCI_BRANCH" ] || git checkout "$ANYCI_BRANCH" || die "ANYCI_BRANCH checkout failed"
 bin/anyci "$@"

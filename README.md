@@ -1,21 +1,22 @@
 # anyci-bootstrap
-anyci-bootstrap ensures an always-updated anyci is available to your projects
+anyci-bootstrap ensures you have an always-updated shared anyci repository available to your projects.
 
 ## quickstart
 
-:construction:
-
-> * adding `bin/ci` to project repositories. [project-skel/bin/ci](project-skel/bin/ci) as source.
+Add `bin/ci` to project repositories using [project-skel/bin/ci](project-skel/bin/ci) as source. You can change the path, just be sure PROJECT_ROOT is detected properly.
 
 ## environment variables
 
 name | default | description
 --- | --- | ---
+ANYCI_BOOTSTRAP_URL | https://github.com/briceburg/anyci-bootstrap.git | URL used by `bin/ci` in project repositories to bootstrap anyci. Can be a path.
+ANYCI_BRANCH | ~empty | Optional. If provided, the branch of the shared anyci repository to checkout when creating the workspace.
 ANYCI_HOME | ~/.anyci | Workspaces and Checkouts directory.
 ANYCI_MAX_AGE | 60 | Number of seconds allowed before checking for  updates.
 ANYCI_SKIP_CLEANUP | false | True to skip cleaning up workspaces and tmp files.
-ANYCI_URL | https://github.com/briceburg/anyci.git | URL of anyci git repository. Can be a path.
-ANYCI_BOOTSTRAP_URL | https://github.com/briceburg/anyci-bootstrap.git | URL used by `bin/ci` in project repositories to bootstrap anyci. Can be a path.
+ANYCI_URL | https://github.com/briceburg/anyci.git | URL of shared anyci repository. Can be a path.
+
+
 
 ## development
 
