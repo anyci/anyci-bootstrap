@@ -2,12 +2,14 @@
 # This project is AnyCI enabled. https://github.com/anyci/anyci for more!
 set -eo pipefail
 readonly PROJECT_ROOT="$( cd "$(dirname "$0")/.." ; pwd -P)"
-ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
-ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/anyci/anyci-bootstrap.git}"
+
+export ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/anyci/anyci-bootstrap.git}"
+export ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
+export ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
 
 # example customizations to suit your inheritance model, see: https://github.com/anyci/anyci/blob/main/README.md#environment-variables
-# ANYCI_PATHS="ci:^acme-gradle:^default"
-# ANYCI_BRANCH="acme"
+# export ANYCI_PATHS="ci:^acme-gradle:^default"
+# export ANYCI_BRANCH="acme"
 
 [ -d "$ANYCI_HOME/anyci-bootstrap" ] || {
   echo "# $0: missing anyci-bootstrap. intalling now..." >&2;
