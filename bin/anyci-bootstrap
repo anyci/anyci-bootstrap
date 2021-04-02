@@ -12,15 +12,16 @@ ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
 ANYCI_MAX_AGE="${ANYCI_MAX_AGE:-60}"
 ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
 
+log "AnyCI repository: $ANYCI_URL"
 [ -d "$ANYCI_HOME/anyci-mirror" ] || {
-  log "missing anyci-mirror repository. intalling now..."
+  log "cloning AnyCI repository..."
   git clone --bare --mirror "$ANYCI_URL" "$ANYCI_HOME/anyci-mirror" 2>&1 | sed "s/^/#    /g"
 }
 
 last_update="$(age "$ANYCI_HOME/anyci-mirror/objects")"
-log "age of last update: ${last_update}s"
+log "Age of AnyCI repository: ${last_update}s (max age is ${ANYCI_MAX_AGE}s)"
 [ "$last_update" -lt "$ANYCI_MAX_AGE" ] || (
-  log "updating anyci-mirror reposirory..."
+  log "updating AnyCI repository..."
   cd "$ANYCI_HOME/anyci-mirror"
   git remote update 2>&1 | sed "s/^/#    /g"
 )
@@ -28,11 +29,10 @@ log "age of last update: ${last_update}s"
 ANYCI_ROOT="$(mktemp -d 2>/dev/null || mktemp -d -t 'anyci')"
 $ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf "$ANYCI_ROOT"' EXIT
 
-log "creating anyci workspace..."
+log "creating workspace: $ANYCI_ROOT"
 git clone -q "$ANYCI_HOME/anyci-mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
 
 # ci handoff...
-log "WORKSPACE: $ANYCI_ROOT"
 cd "$ANYCI_ROOT"
 [ -z "$ANYCI_BRANCH" ] || git checkout "$ANYCI_BRANCH" || die "ANYCI_BRANCH checkout failed"
 bin/anyci "$@"
