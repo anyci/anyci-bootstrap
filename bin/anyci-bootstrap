@@ -6,12 +6,13 @@ die(){ __ll=ERR log "$*"; exit 1; }
 
 # prints age of a path in seconds
 age() { echo $(( $(date +%s) - $(date -r "$1" +%s) )); }
+[[ "$OSTYPE" =~ darwin|macos* ]] && md5sum='md5 -r' || md5sum="md5sum"
 
 ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
 ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
 ANYCI_MAX_AGE="${ANYCI_MAX_AGE:-60}"
 ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
-mirror="$ANYCI_HOME/mirrors/${ANYCI_URL//[^A-Za-z0-9_\-@]/_}"
+mirror="$ANYCI_HOME/mirrors/$($md5sum <<< "$ANYCI_URL" | awk '{print $1}')"
 
 log "AnyCI repository: $ANYCI_URL"
 [ -d "$mirror" ] || {
