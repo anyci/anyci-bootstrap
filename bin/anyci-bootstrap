@@ -20,12 +20,13 @@ log "AnyCI repository: $ANYCI_URL"
   git clone --bare --mirror "$ANYCI_URL" "$mirror" 2>&1 | sed "s/^/#    /g"
 }
 
-last_update="$(age "$mirror/objects")"
+last_update="$(age "$mirror")"
 log "Age of AnyCI repository: ${last_update}s (max age is ${ANYCI_MAX_AGE}s)"
 [ "$last_update" -lt "$ANYCI_MAX_AGE" ] || (
   log "updating AnyCI repository..."
   cd "$mirror"
   git remote update 2>&1 | sed "s/^/#    /g"
+  touch .
 )
 
 ANYCI_ROOT="$(mktemp -d "$ANYCI_HOME/workspace-XXXXXXX")"
