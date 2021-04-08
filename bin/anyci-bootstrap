@@ -11,7 +11,6 @@ age() { echo $(( $(date +%s) - $(date -r "$1" +%s) )); }
 ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
 ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
 ANYCI_MAX_AGE="${ANYCI_MAX_AGE:-60}"
-ANYCI_SKIP_CLEANUP=${ANYCI_SKIP_CLEANUP:-false}
 mirror="$ANYCI_HOME/mirrors/$($md5sum <<< "$ANYCI_URL" | awk '{print $1}')"
 
 log "AnyCI repository: $ANYCI_URL"
@@ -30,7 +29,8 @@ log "Age of AnyCI repository: ${last_update}s (max age is ${ANYCI_MAX_AGE}s)"
 )
 
 ANYCI_ROOT="$(mktemp -d "$ANYCI_HOME/workspace-XXXXXXX")"
-$ANYCI_SKIP_CLEANUP || trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf "$ANYCI_ROOT"' EXIT
+[ "${ANYCI_SKIP_CLEANUP:-false}" = false ] || \
+  trap 'log "cleaning up. ANYCI_SKIP_CLEANUP=true to skip."; rm -rf "$ANYCI_ROOT"' EXIT
 
 log "creating workspace: $ANYCI_ROOT"
 git clone -q "$mirror" "$ANYCI_ROOT" 2>&1 | sed "s/^/#    /g"
