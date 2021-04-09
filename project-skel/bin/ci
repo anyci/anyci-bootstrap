@@ -3,9 +3,9 @@
 set -eo pipefail
 readonly PROJECT_ROOT="$( cd "$(dirname "$0")/.." ; pwd -P)"
 
-export ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/anyci/anyci-bootstrap.git}"
 export ANYCI_HOME="${ANYCI_HOME:-$HOME/.anyci}"
 export ANYCI_URL="${ANYCI_URL:-https://github.com/anyci/anyci.git}"
+export ANYCI_BOOTSTRAP_URL="${ANYCI_BOOTSTRAP_URL:-https://github.com/anyci/anyci-bootstrap.git}"
 
 # example customizations to suit your inheritance model, see: https://github.com/anyci/anyci/blob/main/README.md#environment-variables
 # export ANYCI_PATHS="ci:^acme-gradle:^default"
